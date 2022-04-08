@@ -28,5 +28,6 @@ return [
     'orders' => 'Orders',
     'view' => 'View more',
     'product' => 'Product',
-    'order' => 'Order'
+    'order' => 'Order',
+    'total' => 'Total price'
 ];

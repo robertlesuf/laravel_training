@@ -18,15 +18,19 @@
             <td>{{trans('myapp.order')}}</td>
 
         </tr>
+
+
         @foreach($orders as $key => $order)
             <tr>
                 <td>{{$order->name}}</td>
                 <td>{{$order->contact}}</td>
                 <td>{{$order->comments}}</td>
                 <td>
-                    @foreach($products[$key] as $product)
-                        {{ $product->title }}
-                    @endforeach
+                    @if($products)
+                        @foreach($products[$key] as $product)
+                            {{ $product->title }}
+                        @endforeach
+                    @endif
                 </td>
                 <td>{{ $sums[$key] }}</td>
                 <td>
@@ -34,6 +38,8 @@
                 </td>
             </tr>
         @endforeach
+
+
     </table>
 
 </x-app-layout>
