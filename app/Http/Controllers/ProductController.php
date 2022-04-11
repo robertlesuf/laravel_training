@@ -121,7 +121,6 @@ class ProductController extends Controller
                 session(['cart' => $cart]);
             }
         }
-        $products = Product::whereNotIn('id', $cart)->get();
         return redirect()->route('index');
     }
 
@@ -137,7 +136,6 @@ class ProductController extends Controller
             unset($cart[$key]);
             session(['cart' => $cart]);
         }
-        $products = Product::whereIn('id', $cart)->get();
         return redirect()->route('cart');
     }
 
