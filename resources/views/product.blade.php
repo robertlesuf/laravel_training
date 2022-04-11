@@ -27,9 +27,7 @@
         <strong>{{ trans('myapp.price') }}</strong>
         <input type="text" name="price" value="{{ old('price') ? old('price') : $product->price }}" class="form-control" placeholder="Title">
     </div>
-
-        <img width="100" height="100" src="{{ url('image_stored/' . $product->image_path) }}" alt="">
-
+        <img width="100" height="100" src="{{ asset("image_stored/$product->image_path")  }}" alt="">
     <div>
         <input type="file" name="image" placeholder="Choose image" id="image">
     </div>

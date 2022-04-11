@@ -30,9 +30,12 @@ class ProductController extends Controller
     public function showCart()
     {
         $cart = session()->get('cart');
-        $products = Product::whereIn('id', $cart)->get();
-        return view('cart', ['products' => $products]);
-
+        if ($cart) {
+            $products = Product::whereIn('id', $cart)->get();
+            return view('cart', ['products' => $products]);
+        } else {
+            return view('cart');
+        }
     }
 
     public function deleteProduct(Request $request)

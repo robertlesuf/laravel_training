@@ -10,7 +10,6 @@
             <td>{{trans('myapp.name')}}</td>
             <td>{{trans('myapp.contact')}}</td>
             <td>{{trans('myapp.comments')}}</td>
-            <td>{{trans('myapp.products')}}</td>
             <td>{{trans('myapp.total')}}</td>
 
 
@@ -20,16 +19,22 @@
             <td>{{$order->contact}}</td>
             <td>{{$order->comments}}</td>
             <td>
-                @if($products)
-                    @foreach($products as $product)
-                        {{ $product->title }}
-                    @endforeach
-                @endif
-
-            </td>
-            <td>
                 {{ $sum }}
             </td>
         </tr>
     </table>
+    <h2>Products</h2>
+    <table>
+        @foreach($products as $product)
+            <tr>
+                <td>{{ $product->title }}</td>
+                <td>{{ $product->description }}</td>
+                <td>{{ $product->price }}</td>
+                <td>
+                    <img src="{{ asset("image_stored/$product->image_path")  }}" alt="">
+                </td>
+            </tr>
+        @endforeach
+    </table>
+
 </x-app-layout>

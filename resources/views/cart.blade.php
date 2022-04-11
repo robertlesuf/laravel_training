@@ -1,22 +1,24 @@
 <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 <table>
-    @foreach($products as $product)
-        <tr>
-            <td>{{ $product->title }}</td>
-            <td>{{ $product->description }}</td>
-            <td>{{ $product->price }}</td>
-            <td>
-                <img src="{{ url('image_stored/' . $product->image_path) }}" alt="">
-            </td>
-            <td>
-                <form action="/remove-from-cart" method="POST">
-                    @csrf
-                    <input type="hidden" name="id" value="{{ $product->id }}">
-                    <input type="submit" value="{{ trans('myapp.remove') }}">
-                </form>
-            </td>
-        </tr>
-    @endforeach
+    @if(isset($products))
+        @foreach($products as $product)
+            <tr>
+                <td>{{ $product->title }}</td>
+                <td>{{ $product->description }}</td>
+                <td>{{ $product->price }}</td>
+                <td>
+                    <img src="{{ asset("image_stored/$product->image_path")  }}">
+                </td>
+                <td>
+                    <form action="/remove-from-cart" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+                        <input type="submit" value="{{ trans('myapp.remove') }}">
+                    </form>
+                </td>
+            </tr>
+        @endforeach
+    @endif
 </table>
 @if ($errors->any())
     @foreach ($errors->all() as $error)
@@ -28,9 +30,11 @@
     <label for="name">{{ trans('myapp.name') }}</label>
     <input type="text" name="name" id="name" placeholder="{{ trans('myapp.name') }}" value="{{ old('name') }}">
     <label for="contact">{{ trans('myapp.contact') }}</label>
-    <input type="text" name="contact" id="contact" placeholder="{{ trans('myapp.contact') }}" value="{{ old('contact') }}">
+    <input type="text" name="contact" id="contact" placeholder="{{ trans('myapp.contact') }}"
+           value="{{ old('contact') }}">
     <label for="comments">{{ trans('myapp.comments') }}</label>
-    <input type="text" name="comments" id="comments" placeholder="{{ trans('myapp.comments') }}" value="{{ old('comments') }}">
+    <input type="text" name="comments" id="comments" placeholder="{{ trans('myapp.comments') }}"
+           value="{{ old('comments') }}">
     <input type="submit" value="{{ trans('myapp.checkout') }}">
 </form>
 

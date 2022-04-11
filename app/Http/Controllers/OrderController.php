@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -36,7 +37,7 @@ class OrderController extends Controller
                 }
             }
 
-            Mail::to('me@example.com')->send(new OrderMail($order,$productsForMail));
+            Mail::to('me@example.com')->send(new OrderMail($order, $productsForMail));
         }
         return redirect()->route('index');
     }
@@ -44,28 +45,27 @@ class OrderController extends Controller
     public function showOrders()
     {
         $orders = Order::all();
-        $orders_products = [];
+        $sums = [];
         foreach ($orders as $key => $order) {
-            $ids = [];
-            $orders_products[$key] = Order::find($order->id)->orderProducts;
-            foreach ($orders_products[$key] as $productsList) {
-                $products[$key][] = Product::find($productsList->product_id);
-                $ids[] = $productsList->product_id;
-            }
-            $sums[$key] = Product::whereIn('id',$ids)->sum('price');
+            $sums[$key] = DB::table('order_products')
+                ->join('products', 'products.id', '=', 'order_products.product_id')
+                ->where('order_products.order_id', '=', $order->id)
+                ->sum('products.price');
         }
-        return view('orders', ['orders' => $orders, 'products' => $products, 'sums' => $sums]);
+        return view('orders', ['orders' => $orders, 'sums' => $sums]);
     }
+
     public function showOrder(Request $request)
     {
         $order = Order::findOrFail($request->input('id'));
-        $order_products = Order::find($order->id)->orderProducts;
-        $ids = [];
-        foreach ($order_products as $productsList) {
-            $ids[] = $productsList->product_id;
-            $products[] = Product::find($productsList->product_id);
-        }
-        $sum = Product::whereIn('id',$ids)->sum('price');
+        $sum = DB::table('order_products')
+            ->join('products', 'products.id', '=', 'order_products.product_id')
+            ->where('order_products.order_id', '=', $order->id)
+            ->sum('products.price');
+        $products = DB::table('order_products')
+            ->join('products', 'products.id', '=', 'order_products.product_id')
+            ->where('order_products.order_id', '=', $order->id)
+            ->get();
         return view('order', ['order' => $order, 'products' => $products, 'sum' => $sum]);
     }
 }

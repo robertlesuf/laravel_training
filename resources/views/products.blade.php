@@ -13,7 +13,7 @@
                 <td>{{ $product->description }}</td>
                 <td>{{ $product->price }}</td>
                 <td>
-                    <img src="{{ url('image_stored/' . $product->image_path) }}" alt="">
+                    <img src="{{ asset("image_stored/$product->image_path")  }}" alt="">
                 </td>
                 <td>
                     <form action="/delete-product" method="POST">

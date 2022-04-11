@@ -13,7 +13,6 @@
             <td>{{trans('myapp.name')}}</td>
             <td>{{trans('myapp.contact')}}</td>
             <td>{{trans('myapp.comments')}}</td>
-            <td>{{trans('myapp.products')}}</td>
             <td>{{trans('myapp.total')}}</td>
             <td>{{trans('myapp.order')}}</td>
 
@@ -25,13 +24,6 @@
                 <td>{{$order->name}}</td>
                 <td>{{$order->contact}}</td>
                 <td>{{$order->comments}}</td>
-                <td>
-                    @if($products)
-                        @foreach($products[$key] as $product)
-                            {{ $product->title }}
-                        @endforeach
-                    @endif
-                </td>
                 <td>{{ $sums[$key] }}</td>
                 <td>
                     <a href="{{ route('order',['id' => $order->id ]) }}">{{trans('myapp.view')}}</a>
