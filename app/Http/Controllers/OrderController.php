@@ -47,7 +47,6 @@ class OrderController extends Controller
     public function showOrders()
     {
         $orders = Order::all();
-        $sums = [];
         foreach ($orders as $key => $order) {
             $sums[$key] = DB::table('order_products')
                 ->join('products', 'products.id', '=', 'order_products.product_id')
