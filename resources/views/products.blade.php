@@ -1,5 +1,4 @@
 <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -31,6 +30,4 @@
     <div style="text-align: center">
         <a href="/add-product-page">{{ trans('myapp.add-product') }}</a>
     </div>
-
-
 </x-app-layout>

@@ -34,7 +34,7 @@ class ProductController extends Controller
             $products = Product::whereIn('id', $cart)->get();
             return view('cart', ['products' => $products]);
         } else {
-            return view('cart',['cartEmpty' => 1]);
+            return view('cart', ['cartEmpty' => 1]);
         }
     }
 

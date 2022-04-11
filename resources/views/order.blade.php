@@ -11,8 +11,6 @@
             <td>{{trans('myapp.contact')}}</td>
             <td>{{trans('myapp.comments')}}</td>
             <td>{{trans('myapp.total')}}</td>
-
-
         </tr>
         <tr>
             <td>{{$order->name}}</td>

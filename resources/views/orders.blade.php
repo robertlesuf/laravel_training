@@ -4,10 +4,8 @@
             {{ trans('myapp.orders') }}
         </h2>
     </x-slot>
-
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <h2>{{trans('myapp.orders')}}</h2>
-
     <table>
         <tr>
             <td>{{trans('myapp.name')}}</td>
@@ -15,10 +13,7 @@
             <td>{{trans('myapp.comments')}}</td>
             <td>{{trans('myapp.total')}}</td>
             <td>{{trans('myapp.order')}}</td>
-
         </tr>
-
-
         @foreach($orders as $key => $order)
             <tr>
                 <td>{{$order->name}}</td>
@@ -30,8 +25,5 @@
                 </td>
             </tr>
         @endforeach
-
-
     </table>
-
 </x-app-layout>
