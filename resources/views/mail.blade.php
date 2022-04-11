@@ -1,11 +1,11 @@
 <p>
-    {{ trans('myapp.name') . ' : ' . $order->name  }}
+    {{ trans('myapp.name') }} : {{ $order->name  }}
 </p>
 <p>
-    {{ trans('myapp.contact') . ' : ' . $order->contact  }}
+    {{ trans('myapp.contact')  }} : {{ $order->contact  }}
 </p>
 <p>
-    {{ trans('myapp.comments') . ' : ' . $order->comments  }}
+    {{ trans('myapp.comments')  }} : {{ $order->comments  }}
 </p>
 <h2>{{ trans('myapp.products') }}</h2>
 @foreach($products as $product)

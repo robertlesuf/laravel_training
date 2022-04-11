@@ -28,7 +28,10 @@
         <input type="text" name="price" value="{{ old('price') }}" class="form-control" placeholder="Title">
     </div>
     <div>
-        <input type="file" name="image" placeholder="Choose image" id="image">
+        <div>
+            <label class="button" for="image">{{ trans('myapp.choose_image') }}</label>
+            <input type="file" style="display:none"  name="image" placeholder="" id="image">
+        </div>
         @error('image')
         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
         @enderror

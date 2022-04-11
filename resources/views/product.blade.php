@@ -32,7 +32,8 @@
         </div>
         <img width="100" height="100" src="{{ asset("image_stored/$product->image_path")  }}" alt="">
         <div>
-            <input type="file" name="image" placeholder="Choose image" id="image">
+            <label class="button" for="image">{{ trans('myapp.choose_image') }}</label>
+            <input type="file" style="display:none"  name="image" placeholder="" id="image">
         </div>
         <input type="hidden" name="id" value="{{ $product->id }}">
         <input type="submit" value="{{ trans('myapp.update') }}">

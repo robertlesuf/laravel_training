@@ -29,5 +29,6 @@ return [
     'view' => 'View more',
     'product' => 'Product',
     'order' => 'Order',
-    'total' => 'Total price'
+    'total' => 'Total price',
+    'choose_image' => 'Choose image'
 ];
