@@ -37,13 +37,11 @@ class OrderController extends Controller
                     $productsForMail[] = Product::find($orderProduct->product_id);
                 }
             }
-
             Mail::to('me@example.com')->send(new OrderMail($order, $productsForMail));
             return redirect()->route('index');
         } else {
             return redirect()->route('cart');
         }
-
     }
 
     public function showOrders()

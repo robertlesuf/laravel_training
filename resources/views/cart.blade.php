@@ -23,21 +23,26 @@
         @endforeach
     @endif
 </table>
-@if ($errors->any())
-    @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-@endif
+
 <form action="/checkout" method="POST">
     @csrf
     <label for="name">{{ trans('myapp.name') }}</label>
     <input type="text" name="name" id="name" placeholder="{{ trans('myapp.name') }}" value="{{ old('name') }}">
+    @error('name')
+    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+    @enderror
     <label for="contact">{{ trans('myapp.contact') }}</label>
     <input type="text" name="contact" id="contact" placeholder="{{ trans('myapp.contact') }}"
            value="{{ old('contact') }}">
+    @error('contact')
+    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+    @enderror
     <label for="comments">{{ trans('myapp.comments') }}</label>
     <input type="text" name="comments" id="comments" placeholder="{{ trans('myapp.comments') }}"
            value="{{ old('comments') }}">
+    @error('comments')
+    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+    @enderror
     @if(isset($products))
         <input type="hidden" name="products" value="1">
     @endif

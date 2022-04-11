@@ -50,7 +50,6 @@ class ProductController extends Controller
     public function edit(Request $request)
     {
         $id = $request->input('id');
-
         $product = Product::findOrFail($id);
         return view('product', ['product' => $product]);
     }
@@ -86,8 +85,6 @@ class ProductController extends Controller
             'price' => 'required',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
-
-
         $name = $request->file('image')->store('public/images');
         $name = explode('/', $name);
         $name = end($name);
@@ -104,7 +101,6 @@ class ProductController extends Controller
     {
         $products = Product::all();
         return view('products', ['products' => $products]);
-
     }
 
     public function addToCart(Request $request)

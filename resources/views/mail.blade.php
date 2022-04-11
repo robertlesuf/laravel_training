@@ -10,9 +10,9 @@
 <h2>{{ trans('myapp.products') }}</h2>
 @foreach($products as $product)
     <p>
-        {{ trans('myapp.title') . ' : ' . $product->title }}
-        {{ trans('myapp.description') . ' : ' . $product->description }}
-        {{ trans('myapp.price') . ' : ' . $product->price }}
+        {{ trans('myapp.title') }} : {{ $product->title }}
+        {{ trans('myapp.description') }} : {{ $product->description }}
+        {{ trans('myapp.price') }} : {{ $product->price }}
         <img src="{{ asset("image_stored/$product->image_path")  }}">
     </p>
 @endforeach
