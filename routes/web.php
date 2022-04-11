@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [ProductController::class, 'showIndex'])->name('index');
-Route::get('/order', [OrderController::class, 'showOrder'])->name('order');
+Route::get('/order', [OrderController::class, 'showOrder'])->middleware(['auth'])->name('order');
 Route::get('/orders', [OrderController::class, 'showOrders'])->middleware(['auth'])->name('orders');
 Route::post('/update-product', [ProductController::class, 'update'])->middleware(['auth'])->name('update-product');
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
