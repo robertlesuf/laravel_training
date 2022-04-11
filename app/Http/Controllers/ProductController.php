@@ -44,8 +44,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         Storage::delete('public/images/' . $product->image_path);
         $product->delete();
-        $products = Product::all();
-        return view('products', ['products' => $products]);
+        return redirect()->route('products');
     }
 
     public function edit(Request $request)
