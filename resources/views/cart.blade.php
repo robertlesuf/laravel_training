@@ -1,5 +1,8 @@
 <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 <table>
+    @if(isset($cartEmpty))
+        {{trans('Cart empty')}}
+    @endif
     @if(isset($products))
         @foreach($products as $product)
             <tr>

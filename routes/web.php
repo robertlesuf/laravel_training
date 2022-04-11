@@ -21,7 +21,7 @@ Route::get('/orders', [OrderController::class, 'showOrders'])->middleware(['auth
 Route::post('/update-product', [ProductController::class, 'update'])->middleware(['auth'])->name('update-product');
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 Route::get('/product-edit', [ProductController::class, 'edit'])->middleware(['auth'])->name('product-edit');
-Route::get('/cart', [ProductController::class, 'showCart']);
+Route::get('/cart', [ProductController::class, 'showCart'])->name('cart');
 Route::post('/remove-from-cart', [ProductController::class, 'removeFromCart']);
 Route::post('/add-to-cart', [ProductController::class, 'addToCart']);;
 Route::get('/products', [ProductController::class, 'showAll'])->middleware(['auth'])->name('products');

@@ -34,7 +34,7 @@ class ProductController extends Controller
             $products = Product::whereIn('id', $cart)->get();
             return view('cart', ['products' => $products]);
         } else {
-            return view('cart');
+            return view('cart',['cartEmpty' => 1]);
         }
     }
 
@@ -115,16 +115,14 @@ class ProductController extends Controller
         if (!$cart) {
             $cart = [$id];
             session(['cart' => $cart]);
-            $products = Product::whereNotIn('id', $cart)->get();
-            return view('index', ['products' => $products]);
         } else {
             if (!in_array($id, $cart)) {
                 $cart[] = $id;
                 session(['cart' => $cart]);
             }
-            $products = Product::whereNotIn('id', $cart)->get();
-            return view('index', ['products' => $products]);
         }
+        $products = Product::whereNotIn('id', $cart)->get();
+        return redirect()->route('index');
     }
 
     /**
@@ -140,7 +138,7 @@ class ProductController extends Controller
             session(['cart' => $cart]);
         }
         $products = Product::whereIn('id', $cart)->get();
-        return view('cart', ['products' => $products]);
+        return redirect()->route('cart');
     }
 
     public function addProduct()
