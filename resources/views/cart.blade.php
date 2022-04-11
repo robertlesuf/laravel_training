@@ -38,6 +38,9 @@
     <label for="comments">{{ trans('myapp.comments') }}</label>
     <input type="text" name="comments" id="comments" placeholder="{{ trans('myapp.comments') }}"
            value="{{ old('comments') }}">
+    @if(isset($products))
+        <input type="hidden" name="products" value="1">
+    @endif
     <input type="submit" value="{{ trans('myapp.checkout') }}">
 </form>
 

@@ -18,6 +18,7 @@ class OrderController extends Controller
             'name' => 'required',
             'contact' => 'required',
             'comments' => 'required',
+            'products' => 'required'
         ]);
         $cart = session()->get('cart');
         if ($cart) {
@@ -38,8 +39,11 @@ class OrderController extends Controller
             }
 
             Mail::to('me@example.com')->send(new OrderMail($order, $productsForMail));
+            return redirect()->route('index');
+        } else {
+            return redirect()->route('cart');
         }
-        return redirect()->route('index');
+
     }
 
     public function showOrders()
