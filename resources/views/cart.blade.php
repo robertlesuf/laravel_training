@@ -1,6 +1,6 @@
 <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 <table>
-    @if(isset($cartEmpty))
+    @if(!isset($products))
         {{trans('Cart empty')}}
     @endif
     @if(isset($products))
