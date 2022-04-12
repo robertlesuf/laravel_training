@@ -47,9 +47,8 @@ class ProductController extends Controller
         return redirect()->route('products');
     }
 
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $id = $request->input('id');
         $product = Product::findOrFail($id);
         return view('product', ['product' => $product]);
     }

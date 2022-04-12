@@ -13,7 +13,7 @@
                     <img src="{{ asset("image_stored/$product->image_path")  }}">
                 </td>
                 <td>
-                    <form action="/remove-from-cart" method="POST">
+                    <form action="/remove" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="submit" value="{{ trans('myapp.remove') }}">

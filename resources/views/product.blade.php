@@ -6,7 +6,7 @@
     </x-slot>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <h2>{{ trans('myapp.edit') }}</h2>
-    <form action="/update-product" method="POST" enctype="multipart/form-data">
+    <form action="/product/update" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
             <strong>{{ trans('myapp.title') }}</strong>

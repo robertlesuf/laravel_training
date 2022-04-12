@@ -18,16 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ProductController::class, 'showIndex'])->name('index');
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 Route::get('/cart', [ProductController::class, 'showCart'])->name('cart');
-Route::post('/add-to-cart', [ProductController::class, 'addToCart']);
-Route::post('/remove-from-cart', [ProductController::class, 'removeFromCart']);
+Route::post('/add', [ProductController::class, 'addToCart']);
+Route::post('/remove', [ProductController::class, 'removeFromCart']);
 
 Route::get('/products', [ProductController::class, 'showAll'])->middleware(['auth'])->name('products');
-Route::post('/delete-product', [ProductController::class, 'deleteProduct'])->middleware(['auth']);
-Route::get('/product-edit', [ProductController::class, 'edit'])->middleware(['auth'])->name('product-edit');
-Route::post('/update-product', [ProductController::class, 'update'])->middleware(['auth'])->name('update-product');
-Route::get('/add-product-page',
+Route::post('/product/delete', [ProductController::class, 'deleteProduct'])->middleware(['auth']);
+Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->middleware(['auth'])->name('product-edit');
+Route::post('/product/update', [ProductController::class, 'update'])->middleware(['auth'])->name('product-update');
+Route::get('/product/add',
     [ProductController::class, 'addProduct'])->middleware(['auth'])->name('add-product-page');
-Route::post('/create-product',
+Route::post('/product/create',
     [ProductController::class, 'createProduct'])->middleware(['auth'])->name('create-product');
 
 Route::get('/order', [OrderController::class, 'showOrder'])->middleware(['auth'])->name('order');

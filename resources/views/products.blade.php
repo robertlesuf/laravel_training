@@ -15,19 +15,19 @@
                     <img src="{{ asset("image_stored/$product->image_path")  }}" alt="">
                 </td>
                 <td>
-                    <form action="/delete-product" method="POST">
+                    <form action="/product/delete" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="submit" value="{{ trans('myapp.delete') }}">
                     </form>
                 </td>
                 <td>
-                    <a href="{{ route('product-edit',['id' => $product->id]) }}">{{ trans('myapp.edit') }}</a>
+                    <a href="{{ url('/product/edit',['id' => $product->id]) }}">{{ trans('myapp.edit') }}</a>
                 </td>
             </tr>
         @endforeach
     </table>
     <div style="text-align: center">
-        <a href="/add-product-page">{{ trans('myapp.add-product') }}</a>
+        <a href="/product/add">{{ trans('myapp.add-product') }}</a>
     </div>
 </x-app-layout>

@@ -7,12 +7,12 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <h2>{{ trans('myapp.add-product') }}</h2>
 
-    <form action="/create-product" enctype="multipart/form-data" method="post">
+    <form action="/product/create" enctype="multipart/form-data" method="post">
         @csrf
         <div>
             <strong>{{ trans('myapp.title') }}</strong>
             <input type="text" name="title" value="{{ old('title') }}" class="form-control"
-                   placeholder="trans('myapp.title')">
+                   placeholder="{{ trans('myapp.title') }}">
             @error('title')
             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
             @enderror

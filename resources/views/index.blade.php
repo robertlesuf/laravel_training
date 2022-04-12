@@ -9,7 +9,7 @@
                 <img src="{{ url('image_stored/' . $product->image_path) }}" alt="">
             </td>
             <td>
-                <form action="/add-to-cart" method="POST">
+                <form action="/add" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{ $product->id }}">
                     <input type="submit" value="{{ trans('myapp.add') }}">
