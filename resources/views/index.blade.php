@@ -6,7 +6,7 @@
             <td>{{ $product->description }}</td>
             <td>{{ $product->price }}</td>
             <td>
-                <img src="{{ url('image_stored/' . $product->image_path) }}" alt="">
+                <img width="100" src="{{ url('image_stored/' . $product->image_path) }}" alt="">
             </td>
             <td>
                 <form action="/add" method="POST">

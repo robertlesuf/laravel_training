@@ -12,7 +12,7 @@
                 <td>{{ $product->description }}</td>
                 <td>{{ $product->price }}</td>
                 <td>
-                    <img src="{{ asset("image_stored/$product->image_path")  }}" alt="">
+                    <img width="100" src="{{ asset("image_stored/$product->image_path")  }}" alt="">
                 </td>
                 <td>
                     <form action="/product/delete" method="POST">

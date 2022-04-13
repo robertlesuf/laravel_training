@@ -16,20 +16,24 @@
             <td>{{$order->name}}</td>
             <td>{{$order->contact}}</td>
             <td>{{$order->comments}}</td>
-            <td>
-                {{ $sum }}
-            </td>
+            <td>{{$order->total()}}</td>
         </tr>
     </table>
     <h2>Products</h2>
     <table>
-        @foreach($products as $product)
+        @foreach($order_products as $order_product)
             <tr>
-                <td>{{ $product->title }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->price }}</td>
                 <td>
-                    <img src="{{ asset("image_stored/$product->image_path")  }}" alt="">
+                    {{$order_product->product->title}}
+                </td>
+                <td>
+                    {{$order_product->product->description}}
+                </td>
+                <td>
+                    {{$order_product->price}}
+                </td>
+                <td>
+                    <img width="100" src="{{ url('image_stored/' . $order_product->product->image_path) }}" alt="">
                 </td>
             </tr>
         @endforeach

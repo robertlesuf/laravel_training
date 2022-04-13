@@ -7,7 +7,6 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -29,12 +28,13 @@ class OrderController extends Controller
             $order->save();
             $productsForMail = [];
             foreach ($cart as $id) {
-                if (Product::find($id)) {
+                if ($prod = Product::find($id)) {
                     $orderProduct = new OrderProduct;
                     $orderProduct->order_id = $order->id;
                     $orderProduct->product_id = $id;
+                    $orderProduct->price = $prod->price;
                     $orderProduct->save();
-                    $productsForMail[] = Product::find($orderProduct->product_id);
+                    $productsForMail[] = $prod;
                 }
             }
             Mail::to('me@example.com')->send(new OrderMail($order, $productsForMail));
@@ -47,26 +47,14 @@ class OrderController extends Controller
     public function showOrders()
     {
         $orders = Order::all();
-        foreach ($orders as $key => $order) {
-            $sums[$key] = DB::table('order_products')
-                ->join('products', 'products.id', '=', 'order_products.product_id')
-                ->where('order_products.order_id', '=', $order->id)
-                ->sum('products.price');
-        }
-        return view('orders', ['orders' => $orders, 'sums' => $sums]);
+
+        return view('orders', ['orders' => $orders]);
     }
 
-    public function showOrder(Request $request)
+    public function showOrder($id)
     {
-        $order = Order::findOrFail($request->input('id'));
-        $sum = DB::table('order_products')
-            ->join('products', 'products.id', '=', 'order_products.product_id')
-            ->where('order_products.order_id', '=', $order->id)
-            ->sum('products.price');
-        $products = DB::table('order_products')
-            ->join('products', 'products.id', '=', 'order_products.product_id')
-            ->where('order_products.order_id', '=', $order->id)
-            ->get();
-        return view('order', ['order' => $order, 'products' => $products, 'sum' => $sum]);
+        $order = Order::findOrFail($id);
+        $order_products = $order->orderProducts;
+        return view('order', ['order' => $order, 'order_products' => $order_products]);
     }
 }

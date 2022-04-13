@@ -14,16 +14,18 @@
             <td>{{trans('myapp.total')}}</td>
             <td>{{trans('myapp.order')}}</td>
         </tr>
-        @foreach($orders as $key => $order)
-            <tr>
-                <td>{{$order->name}}</td>
-                <td>{{$order->contact}}</td>
-                <td>{{$order->comments}}</td>
-                <td>{{ $sums[$key] }}</td>
-                <td>
-                    <a href="{{ route('order',['id' => $order->id ]) }}">{{trans('myapp.view')}}</a>
-                </td>
-            </tr>
-        @endforeach
+
+        @if(isset($orders))
+            @foreach($orders as  $order)
+                <tr>
+                    <td>{{ $order->name }}</td>
+                    <td>{{ $order->contact }}</td>
+                    <td>{{ $order->comments }}</td>
+                    <td>{{ $order->total() }}</td>
+                    <td> <a href="{{ url('/order',['id' => $order->id ]) }}">{{trans('myapp.view')}}</a></td>
+                </tr>
+            @endforeach
+        @endif
+
     </table>
 </x-app-layout>

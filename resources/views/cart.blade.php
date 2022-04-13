@@ -10,7 +10,7 @@
                 <td>{{ $product->description }}</td>
                 <td>{{ $product->price }}</td>
                 <td>
-                    <img src="{{ asset("image_stored/$product->image_path")  }}">
+                    <img width="100" src="{{ asset("image_stored/$product->image_path")  }}">
                 </td>
                 <td>
                     <form action="/remove" method="POST">
@@ -46,6 +46,9 @@
     @if(isset($products))
         <input type="hidden" name="products" value="1">
     @endif
+    @error('products')
+    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+    @enderror
     <input type="submit" value="{{ trans('myapp.checkout') }}">
 </form>
 

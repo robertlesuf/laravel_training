@@ -30,7 +30,7 @@ Route::get('/product/add',
 Route::post('/product/create',
     [ProductController::class, 'createProduct'])->middleware(['auth'])->name('create-product');
 
-Route::get('/order', [OrderController::class, 'showOrder'])->middleware(['auth'])->name('order');
+Route::get('/order/{id}', [OrderController::class, 'showOrder'])->middleware(['auth'])->name('order');
 Route::get('/orders', [OrderController::class, 'showOrders'])->middleware(['auth'])->name('orders');
 
 
