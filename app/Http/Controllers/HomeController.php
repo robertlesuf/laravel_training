@@ -23,7 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $cart = session()->get('cart', []);
-        return view('index', ['products' => Product::whereNotIn('id', $cart)->get()]);
+        return view('index', ['products' => Product::whereNotIn('id', session()->get('cart', []))->get()]);
     }
 }

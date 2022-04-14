@@ -23,11 +23,10 @@ class CartController extends Controller
         return redirect()->route('index');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         $cart = session()->get('cart',[]);
-        array_splice($cart,array_search($request->input('id'),$cart),1);
-        session()->put(['cart' => $cart]);
+        session()->put(['cart' => array_diff($cart,[$id])]);
         return redirect()->route('cart.index');
     }
 
