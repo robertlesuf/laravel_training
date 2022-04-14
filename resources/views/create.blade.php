@@ -2,26 +2,24 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="row justify-content-center ">
         <div class="col-md-8">
             <div class="card p-5">
-                <h2>{{ trans('myapp.edit') }}</h2>
-                <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                <h2>{{ trans('myapp.add-product') }}</h2>
+                <form action="{{ route('products.store') }}" enctype="multipart/form-data" method="post">
                     @csrf
-                    @method('PUT')
                     <div>
                         <strong>{{ trans('myapp.title') }}</strong>
-                        <input type="text" name="title" value="{{ old('title') ? old('title') : $product->title }}"
-                               class="form-control" placeholder="{{ trans('myapp.title') }}">
+                        <input type="text" name="title" value="{{ old('title') }}" class="form-control"
+                               placeholder="{{ trans('myapp.title') }}">
                         @error('title')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
                         <strong>{{ trans('myapp.description') }}</strong>
-                        <input type="text" name="description"
-                               value="{{ old('description') ? old('description') : $product->description }}"
-                               class="form-control"
+                        <input type="text" name="description" value="{{ old('description') }}" class="form-control"
                                placeholder="{{ trans('myapp.description') }}">
                         @error('description')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
@@ -29,18 +27,22 @@
                     </div>
                     <div>
                         <strong>{{ trans('myapp.price') }}</strong>
-                        <input type="text" name="price" value="{{ old('price') ? old('price') : $product->price }}"
-                               class="form-control" placeholder="{{ trans('myapp.price') }}">
+                        <input type="text" name="price" value="{{ old('price') }}" class="form-control"
+                               placeholder="{{ trans('myapp.price') }}">
                         @error('price')
                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
-                    <img width="100" height="100" src="{{ asset("images/$product->image_path")  }}" alt="">
                     <div>
-                        <label class="button" for="image">{{ trans('myapp.choose_image') }}</label>
-                        <input type="file" style="display:none" name="image" placeholder="" id="image">
+                        <div>
+                            <label class="button" for="image">{{ trans('myapp.choose-image') }}</label>
+                            <input type="file" style="display:none" name="image" placeholder="" id="image">
+                        </div>
+                        @error('image')
+                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <input type="submit" value="{{ trans('myapp.update') }}">
+                    <input type="submit" value="{{ trans('myapp.create-product') }}">
                 </form>
             </div>
         </div>

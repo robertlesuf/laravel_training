@@ -4,14 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderMail;
 use App\Models\Order;
-use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
-    public function checkout(Request $request)
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('store');
+    }
+
+    public function index()
+    {
+        $orders = Order::all();
+        $totals = Order::selectRaw('SUM(order_product.price) as total')->leftJoin('order_product',
+            'order_product.order_id', '=', 'orders.id')->groupBy('orders.id')->get();
+        return view('orders', ['orders' => $orders, 'totals' => $totals]);
+    }
+
+    public function show($id)
+    {
+        $order = Order::find($id);
+        $products = $order->products()->get();
+        return view('order', ['order' => $order, 'products' => $products]);
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -19,42 +39,17 @@ class OrderController extends Controller
             'comments' => 'required',
             'products' => 'required'
         ]);
-        $cart = session()->get('cart');
-        if ($cart) {
-            $order = new Order;
-            $order->name = $request->input('name');
-            $order->contact = $request->input('contact');
-            $order->comments = $request->input('comments');
-            $order->save();
-            $productsForMail = [];
-            foreach ($cart as $id) {
-                if ($prod = Product::find($id)) {
-                    $orderProduct = new OrderProduct;
-                    $orderProduct->order_id = $order->id;
-                    $orderProduct->product_id = $id;
-                    $orderProduct->price = $prod->price;
-                    $orderProduct->save();
-                    $productsForMail[] = $prod;
-                }
-            }
-            Mail::to('me@example.com')->send(new OrderMail($order, $productsForMail));
-            return redirect()->route('index');
-        } else {
-            return redirect()->route('cart');
+        $order = Order::create([
+            'name' => $request->input('name'),
+            'contact' => $request->input('contact'),
+            'comments' => $request->input('comments'),
+        ]);
+        $products = Product::whereIn('id', session()->get('cart'))->get();
+        foreach ($products as $product) {
+            $order->products()->attach($product->id, ['price' => $product->price]);
         }
+        Mail::to('me@example.com')->send(new OrderMail($order, $products));
+        return redirect()->route('index');
     }
 
-    public function showOrders()
-    {
-        $orders = Order::all();
-
-        return view('orders', ['orders' => $orders]);
-    }
-
-    public function showOrder($id)
-    {
-        $order = Order::findOrFail($id);
-        $order_products = $order->orderProducts;
-        return view('order', ['order' => $order, 'order_products' => $order_products]);
-    }
 }

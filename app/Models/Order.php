@@ -9,13 +9,19 @@ class Order extends Model
 {
     use HasFactory;
 
-    public function orderProducts()
-    {
-        return $this->hasMany(OrderProduct::class);
-    }
+    protected $fillable = [
+        'name',
+        'contact',
+        'comments'
+    ];
 
     public function total()
     {
-        return $this->orderProducts()->sum('price');
+        return $this->products()->sum('order_product.price');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('price');
     }
 }

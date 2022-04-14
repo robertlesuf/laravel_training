@@ -5,30 +5,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Translations
+    | Authentication Language Lines
     |--------------------------------------------------------------------------
+    |
+    | The following language lines are used during authentication for various
+    | messages that we need to display to the user. You are free to modify
+    | these language lines according to your application's requirements.
     |
     */
 
-    'add' => 'Add product to cart',
-    'remove' => 'Remove product from cart',
-    'delete' => 'Delete product',
-    'products' => 'Products',
-    'edit' => 'Edit product',
+    'delete' => 'Delete',
+    'edit' => 'Edit',
+    'add-product' => 'Add product',
     'title' => 'Title',
     'description' => 'Description',
     'price' => 'Price',
-    'update' => 'Update product',
-    'add-product' => 'Add product',
-    'create-product' => 'Create',
+    'choose-image' => 'Choose image',
+    'create-product' => 'Create product',
     'name' => 'Name',
     'contact' => 'Contact',
-    'checkout' => 'Checkout',
     'comments' => 'Comments',
-    'orders' => 'Orders',
-    'view' => 'View more',
-    'product' => 'Product',
-    'order' => 'Order',
-    'total' => 'Total price',
-    'choose_image' => 'Choose image'
+    'checkout' => 'Checkout'
 ];

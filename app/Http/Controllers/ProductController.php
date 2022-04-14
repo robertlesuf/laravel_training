@@ -5,136 +5,71 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class ProductController extends Controller
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function showIndex()
+    public function index()
     {
-        $cart = session()->get('cart');
-        if (!$cart) {
-            $products = Product::all();
-            return view('index', ['products' => $products]);
-        } else {
-            $products = Product::whereNotIn('id', $cart)->get();
-            return view('index', ['products' => $products]);
-        }
-
+        return view('products', ['products' => Product::all()]);
     }
 
-    public function showCart()
+    public function destroy($id)
     {
-        $cart = session()->get('cart');
-        if ($cart) {
-            $products = Product::whereIn('id', $cart)->get();
-            return view('cart', ['products' => $products]);
-        } else {
-            return view('cart');
-        }
-    }
-
-    public function deleteProduct(Request $request)
-    {
-        $id = $request->input('id');
         $product = Product::findOrFail($id);
         Storage::delete('public/images/' . $product->image_path);
         $product->delete();
-        return redirect()->route('products');
+        return redirect()->route('products.index');
+    }
+
+    public function create()
+    {
+        return view('create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+        $name = $request->file('image')->store('public/images');
+        $name = basename($name);
+        Product::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'image_path' => $name,
+            'price' => $request->input('price'),
+        ]);
+        return redirect()->route('products.index');
     }
 
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        return view('product', ['product' => $product]);
+        return view('product', ['product' => Product::findOrFail($id)]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'price' => 'required',
+            'price' => 'required|numeric',
         ]);
-        $id = $request->input('id');
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
         if ($request->file('image')) {
             Storage::delete('public/images/' . $product->image_path);
             $name = $request->file('image')->store('public/images');
-            $name = explode('/', $name);
-            $name = end($name);
-            $product->image_path = $name;
+            $name = basename($name);
         }
-        $product->title = $request->input('title');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-        $product->save();
-        return redirect()->route('products');
-    }
-
-    public function createProduct(Request $request)
-    {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        $product->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'image_path' => $name ?? $product->image_path,
+            'price' => $request->input('price'),
         ]);
-        $name = $request->file('image')->store('public/images');
-        $name = explode('/', $name);
-        $name = end($name);
-        $product = new Product();
-        $product->title = $request->input('title');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-        $product->image_path = $name;
-        $product->save();
-        return redirect()->route('products');
+        return redirect()->route('products.index');
     }
 
-    public function showAll()
-    {
-        $products = Product::all();
-        return view('products', ['products' => $products]);
-    }
-
-    public function addToCart(Request $request)
-    {
-        $id = $request->input('id');
-        $cart = session()->get('cart');
-        if (!$cart) {
-            $cart = [$id];
-            session(['cart' => $cart]);
-        } else {
-            if (!in_array($id, $cart)) {
-                $cart[] = $id;
-                session(['cart' => $cart]);
-            }
-        }
-        return redirect()->route('index');
-    }
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function removeFromCart(Request $request)
-    {
-        $id = $request->input('id');
-        $cart = session()->get('cart');
-        if (($key = array_search($id, $cart)) !== false) {
-            unset($cart[$key]);
-            session(['cart' => $cart]);
-        }
-        return redirect()->route('cart');
-    }
-
-    public function addProduct()
-    {
-        return view('add');
-    }
 }

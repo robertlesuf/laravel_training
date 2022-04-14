@@ -13,6 +13,6 @@
         {{ trans('myapp.title') }} : {{ $product->title }}
         {{ trans('myapp.description') }} : {{ $product->description }}
         {{ trans('myapp.price') }} : {{ $product->price }}
-        <img src="{{ asset("image_stored/$product->image_path")  }}">
+        <img src="{{ asset("images/$product->image_path")  }}">
     </p>
 @endforeach

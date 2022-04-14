@@ -10,8 +10,13 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'price'
+        'title', 'description', 'price','image_path'
     ];
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 
 
 }
