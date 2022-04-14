@@ -11,7 +11,7 @@
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->price }}</td>
                             <td>
-                                <img width="100" src="{{ asset('images/' . $product->image_path) }}" alt="">
+                                <img width="100" src="{{ asset("images/$product->image_path") }}" alt="">
                             </td>
                             <td>
                                 <form action="{{ route('cart.store',['id' => $product->id]) }}" method="POST">
