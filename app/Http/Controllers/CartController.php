@@ -10,8 +10,7 @@ class CartController extends Controller
 
     public function index()
     {
-        $products = Product::whereIn('id', session()->get('cart', []))->get();
-        return view('cart', ['products' => $products]);
+        return view('cart', ['products' => Product::whereIn('id', session()->get('cart', []))->get()]);
     }
 
 

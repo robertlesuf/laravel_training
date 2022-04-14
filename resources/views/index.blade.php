@@ -23,7 +23,6 @@
                     @endforeach
                 </table>
                 <a href="{{ route('cart.index') }}">{{ trans('myapp.cart') }}</a>
-
             </div>
         </div>
     </div>
