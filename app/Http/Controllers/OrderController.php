@@ -49,6 +49,7 @@ class OrderController extends Controller
             $order->products()->attach($product->id, ['price' => $product->price]);
         }
         Mail::to('me@example.com')->send(new OrderMail($order, $products));
+        session()->put(['cart' => []]);
         return redirect()->route('index');
     }
 
