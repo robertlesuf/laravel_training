@@ -38,19 +38,19 @@
                     <input type="text" name="name" id="name" placeholder="{{ trans('myapp.name') }}"
                            value="{{ old('name') }}">
                     @error('name')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    <div class="alert alert-danger mt-1 mb-1">{{ __('Name is required') }}</div>
                     @enderror
                     <label for="contact">{{ trans('myapp.contact') }}</label>
                     <input type="text" name="contact" id="contact" placeholder="{{ trans('myapp.contact') }}"
                            value="{{ old('contact') }}">
                     @error('contact')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    <div class="alert alert-danger mt-1 mb-1">{{ __('Contact is required') }}</div>
                     @enderror
                     <label for="comments">{{ trans('myapp.comments') }}</label>
                     <input type="text" name="comments" id="comments" placeholder="{{ trans('myapp.comments') }}"
                            value="{{ old('comments') }}">
                     @error('comments')
-                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                    <div class="alert alert-danger mt-1 mb-1">{{ __('Comments is required') }}</div>
                     @enderror
 
                     @if(!$products->isempty())

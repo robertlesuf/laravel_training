@@ -14,7 +14,7 @@
                         <input type="text" name="title" value="{{ old('title') ? old('title') : $product->title }}"
                                class="form-control" placeholder="{{ trans('myapp.title') }}">
                         @error('title')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        <div class="alert alert-danger mt-1 mb-1">{{ __('Title is required') }}</div>
                         @enderror
                     </div>
                     <div>
@@ -24,7 +24,7 @@
                                class="form-control"
                                placeholder="{{ trans('myapp.description') }}">
                         @error('description')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        <div class="alert alert-danger mt-1 mb-1">{{ __('Description is required') }}</div>
                         @enderror
                     </div>
                     <div>
@@ -32,7 +32,7 @@
                         <input type="text" name="price" value="{{ old('price') ? old('price') : $product->price }}"
                                class="form-control" placeholder="{{ trans('myapp.price') }}">
                         @error('price')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        <div class="alert alert-danger mt-1 mb-1">{{ __('Price is required') }}</div>
                         @enderror
                     </div>
                     <img width="100" height="100" src="{{ asset("images/$product->image_path")  }}" alt="">

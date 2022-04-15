@@ -14,7 +14,7 @@
                         <input type="text" name="title" value="{{ old('title') }}" class="form-control"
                                placeholder="{{ trans('myapp.title') }}">
                         @error('title')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        <div class="alert alert-danger mt-1 mb-1">{{ __('Title is required') }}</div>
                         @enderror
                     </div>
                     <div>
@@ -22,7 +22,7 @@
                         <input type="text" name="description" value="{{ old('description') }}" class="form-control"
                                placeholder="{{ trans('myapp.description') }}">
                         @error('description')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        <div class="alert alert-danger mt-1 mb-1">{{ __('Description is required') }}</div>
                         @enderror
                     </div>
                     <div>
@@ -30,7 +30,7 @@
                         <input type="text" name="price" value="{{ old('price') }}" class="form-control"
                                placeholder="{{ trans('myapp.price') }}">
                         @error('price')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        <div class="alert alert-danger mt-1 mb-1">{{ __('Price is required') }}</div>
                         @enderror
                     </div>
                     <div>
@@ -39,7 +39,7 @@
                             <input type="file" style="display:none" name="image" placeholder="" id="image">
                         </div>
                         @error('image')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        <div class="alert alert-danger mt-1 mb-1">{{ __('Image is required') }}</div>
                         @enderror
                     </div>
                     <input type="submit" value="{{ trans('myapp.create-product') }}">
