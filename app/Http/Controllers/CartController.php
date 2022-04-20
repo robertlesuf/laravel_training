@@ -16,7 +16,7 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
-        $cart = session()->get('cart', [$request->input('id')]);
+        $cart = session('cart', [$request->input('id')]);
         $cart[] = $request->input('id');
         session()->put(['cart' => array_unique($cart)]);
         return redirect()->route('index');
@@ -24,8 +24,8 @@ class CartController extends Controller
 
     public function destroy($id)
     {
-        $cart = session()->get('cart',[]);
-        session()->put(['cart' => array_diff($cart,[$id])]);
+        $cart = session('cart', []);
+        session()->put(['cart' => array_diff($cart, [$id])]);
         return redirect()->route('cart.index');
     }
 

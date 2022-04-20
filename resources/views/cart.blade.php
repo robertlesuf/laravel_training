@@ -56,9 +56,6 @@
                     @if(!$products->isempty())
                         <input type="hidden" name="products" id="comments" value="1">
                     @endif
-                    @error('products')
-                    <div class="alert alert-danger mt-1 mb-1">{{ __('Products are required') }}</div>
-                    @enderror
 
                     <input type="submit" value="{{ trans('myapp.checkout') }}">
                 </form>

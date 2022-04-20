@@ -45,7 +45,7 @@ class OrderController extends Controller
             'comments' => $request->input('comments'),
         ]);
         $products = Product::whereIn('id', session()->get('cart'))->get();
-        foreach ($products as $product){
+        foreach ($products as $product) {
             $syncArray[$product->id] = ['price' => $product->price];
         }
         $order->products()->sync($syncArray);
