@@ -13,7 +13,6 @@ class CartController extends Controller
         return view('cart', ['products' => Product::whereIn('id', session()->get('cart', []))->get()]);
     }
 
-
     public function store(Request $request)
     {
         $cart = session('cart', [$request->input('id')]);
