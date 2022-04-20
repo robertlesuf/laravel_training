@@ -45,9 +45,12 @@ class OrderController extends Controller
             'comments' => $request->input('comments'),
         ]);
         $products = Product::whereIn('id', session()->get('cart'))->get();
-        foreach ($products as $product) {
-            $syncArray[$product->id] = ['price' => $product->price];
-        }
+        $syncArray = array_combine($products->pluck('id')->toArray(), array_map(function ($value) {
+            return ['price' => $value];
+        }, $products->pluck('price')->toArray()));
+        //foreach ($products as $product) {
+        //    $syncArray[$product->id] = ['price' => $product->price];
+        //}
         $order->products()->sync($syncArray);
         Mail::to('me@example.com')->send(new OrderMail($order, $products));
         session()->put(['cart' => []]);
