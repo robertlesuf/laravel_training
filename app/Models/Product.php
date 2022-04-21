@@ -19,12 +19,12 @@ class Product extends Model
 
     public static function getProductsInCart()
     {
-        return Product::whereIn('id', session()->get('cart'))->get();
+        return Product::whereIn('id', session()->get('cart',[]))->get();
     }
 
     public static function getProductsNotInCart()
     {
-        return Product::whereNotIn('id', session()->get('cart'))->get();
+        return Product::whereNotIn('id', session()->get('cart',[]))->get();
     }
 
     public function orders()
