@@ -27,13 +27,6 @@ class Product extends Model
         return Product::whereNotIn('id', session()->get('cart'))->get();
     }
 
-    public static function deleteProductAndImage($id)
-    {
-        $product = Product::findOrFail($id);
-        Storage::delete('public/images/' . $product->image_path);
-        $product->delete();
-    }
-
     public function orders()
     {
         return $this->belongsToMany(Order::class)->withPivot('price');

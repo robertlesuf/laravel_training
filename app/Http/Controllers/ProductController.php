@@ -21,7 +21,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        Product::deleteProductAndImage($id);
+        $this->productService->deleteProductAndImage($id);
         return redirect()->route('products.index');
     }
 
@@ -33,7 +33,7 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
         Product::create(
-            $this->productService->getCreateArray($this->productService->storeImage($request), $request)
+            $this->productService->getProductArray($this->productService->storeImage($request), $request)
         );
         return redirect()->route('products.index');
     }
@@ -47,7 +47,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->update(
-            $this->productService->getCreateArray($this->productService->replaceImageOnUpdate($request,
+            $this->productService->getProductArray($this->productService->replaceImageOnUpdate($request,
                 $product->image_path), $request)
         );
         return redirect()->route('products.index');
