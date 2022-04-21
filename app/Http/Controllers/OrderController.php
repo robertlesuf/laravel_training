@@ -7,7 +7,6 @@ use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\Product;
 use App\Services\OrderService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -39,7 +38,7 @@ class OrderController extends Controller
     {
         $order = Order::create($request->validated());
         $products = Product::getProductsInCart();
-        $this->orderService->syncProducts($products,$order);
+        $this->orderService->syncProducts($products, $order);
         Mail::to('me@example.com')->send(new OrderMail($order, $products));
         session()->put(['cart' => []]);
         return redirect()->route('index');

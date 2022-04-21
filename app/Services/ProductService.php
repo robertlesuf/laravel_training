@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
-use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
 class ProductService
@@ -14,7 +13,7 @@ class ProductService
         return basename($request->file('image')->store('public/images'));
     }
 
-    public function replaceImageOnUpdate(ProductUpdateRequest $request,$current_path)
+    public function replaceImageOnUpdate(ProductUpdateRequest $request, $current_path)
     {
         if ($request->file('image')) {
             Storage::delete('public/images/' . $current_path);

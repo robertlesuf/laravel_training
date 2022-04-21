@@ -6,8 +6,6 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Services\ProductService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -15,6 +13,7 @@ class ProductController extends Controller
     {
         $this->productService = $productService;
     }
+
     public function index()
     {
         return view('products', ['products' => Product::all()]);
@@ -34,7 +33,7 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
         Product::create(
-            $this->productService->getCreateArray($this->productService->storeImage($request),$request)
+            $this->productService->getCreateArray($this->productService->storeImage($request), $request)
         );
         return redirect()->route('products.index');
     }
@@ -48,7 +47,8 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->update(
-            $this->productService->getCreateArray($this->productService->replaceImageOnUpdate($request,$product->image_path),$request)
+            $this->productService->getCreateArray($this->productService->replaceImageOnUpdate($request,
+                $product->image_path), $request)
         );
         return redirect()->route('products.index');
     }
