@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
     public function index()
     {
         return view('products', ['products' => Product::all()]);
@@ -15,9 +22,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        Storage::delete('public/images/' . $product->image_path);
-        $product->delete();
+        Product::deleteProductAndImage($id);
         return redirect()->route('products.index');
     }
 
@@ -26,22 +31,11 @@ class ProductController extends Controller
         return view('create');
     }
 
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ]);
-        $name = $request->file('image')->store('public/images');
-        $name = basename($name);
-        Product::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'image_path' => $name,
-            'price' => $request->input('price'),
-        ]);
+        Product::create(
+            $this->productService->getCreateArray($this->productService->storeImage($request),$request)
+        );
         return redirect()->route('products.index');
     }
 
@@ -50,25 +44,12 @@ class ProductController extends Controller
         return view('product', ['product' => Product::findOrFail($id)]);
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
-        ]);
         $product = Product::find($id);
-        if ($request->file('image')) {
-            Storage::delete('public/images/' . $product->image_path);
-            $name = $request->file('image')->store('public/images');
-            $name = basename($name);
-        }
-        $product->update([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'image_path' => $name ?? $product->image_path,
-            'price' => $request->input('price'),
-        ]);
+        $product->update(
+            $this->productService->getCreateArray($this->productService->replaceImageOnUpdate($request,$product->image_path),$request)
+        );
         return redirect()->route('products.index');
     }
 

@@ -2,56 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\Product;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
 
-    public function __construct()
+    public function __construct(OrderService $orderService)
     {
         $this->middleware('auth')->except('store');
+        $this->orderService = $orderService;
     }
 
     public function index()
     {
-        $orders = Order::all();
-        $totals = Order::selectRaw('SUM(order_product.price) as total')->leftJoin('order_product',
-            'order_product.order_id', '=', 'orders.id')->groupBy('orders.id')->get();
-        return view('orders', ['orders' => $orders, 'totals' => $totals]);
+        return view('orders', ['orders' => Order::all(), 'totals' => $totals = Order::getAllTotals()]);
     }
 
     public function show($id)
     {
         $order = Order::find($id);
-        $products = $order->products()->get();
-        return view('order', ['order' => $order, 'products' => $products]);
+        return view('order', ['order' => $order, 'products' => $order->products()->get()]);
     }
 
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'contact' => 'required',
-            'comments' => 'required',
-            'products' => 'required'
-        ]);
-        $order = Order::create([
-            'name' => $request->input('name'),
-            'contact' => $request->input('contact'),
-            'comments' => $request->input('comments'),
-        ]);
-        $products = Product::whereIn('id', session()->get('cart'))->get();
-        //$syncArray = array_combine($products->pluck('id')->toArray(), array_map(function ($value) {
-        //    return ['price' => $value];
-        //}, $products->pluck('price')->toArray()));
-        foreach ($products as $product) {
-            $syncArray[$product->id] = ['price' => $product->price];
-        }
-        $order->products()->sync($syncArray);
+        $order = Order::create($request->validated());
+        $products = Product::getProductsInCart();
+        $this->orderService->syncProducts($products,$order);
         Mail::to('me@example.com')->send(new OrderMail($order, $products));
         session()->put(['cart' => []]);
         return redirect()->route('index');
