@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $guarded = [
         'name',
         'contact',
         'comments'
@@ -17,7 +17,7 @@ class Order extends Model
 
     public static function getAllTotals()
     {
-        return Order::selectRaw('SUM(order_product.price) as total')->leftJoin('order_product',
+        return Order::selectRaw('SUM(order_product.price) as total, `name`')->leftJoin('order_product',
             'order_product.order_id', '=', 'orders.id')->groupBy('orders.id')->get();
     }
 

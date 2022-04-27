@@ -22,11 +22,11 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Auth::routes();
 
-Route::resource('products', ProductController::class)->middleware('auth');
+Route::resource('products', ProductController::class)->middleware('auth')->except(['show']);
 
-Route::resource('cart', CartController::class);
+Route::resource('cart', CartController::class)->only(['index','store','destroy']);
 
-Route::resource('orders', OrderController::class);
+Route::resource('orders', OrderController::class)->only(['index','show','store']);
 
 
 
