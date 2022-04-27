@@ -8,16 +8,16 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
             <table>
                 <tr>
-                    <td>{{trans('myapp.name')}}</td>
-                    <td>{{trans('myapp.contact')}}</td>
-                    <td>{{trans('myapp.comments')}}</td>
-                    <td>{{trans('myapp.total')}}</td>
+                    <td>{{ trans('myapp.name') }}</td>
+                    <td>{{ trans('myapp.contact') }}</td>
+                    <td>{{ trans('myapp.comments') }}</td>
+                    <td>{{ trans('myapp.total') }}</td>
                 </tr>
                 <tr>
-                    <td>{{$order->name}}</td>
-                    <td>{{$order->contact}}</td>
-                    <td>{{$order->comments}}</td>
-                    <td>{{$order->total()}}</td>
+                    <td>{{ $order->name }}</td>
+                    <td>{{ $order->contact }}</td>
+                    <td>{{ $order->comments }}</td>
+                    <td>{{ $order->total() }}</td>
                 </tr>
             </table>
             <h2>Products</h2>
@@ -25,13 +25,13 @@
                 @foreach($products as $product)
                     <tr>
                         <td>
-                            {{$product->title}}
+                            {{ $product->title }}
                         </td>
                         <td>
-                            {{$product->description}}
+                            {{ $product->description }}
                         </td>
                         <td>
-                            {{$product->pivot->price}}
+                            {{ $product->pivot->price }}
                         </td>
                         <td>
                             <img width="100" src="{{ url('images/' . $product->image_path) }}"

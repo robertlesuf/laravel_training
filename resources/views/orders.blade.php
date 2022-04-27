@@ -6,14 +6,14 @@
         <div class="col-md-8">
             <div class="card p-5">
 
-                <h2>{{trans('myapp.orders')}}</h2>
+                <h2>{{ trans('myapp.orders') }}</h2>
                 <table>
                     <tr>
-                        <td>{{trans('myapp.name')}}</td>
-                        <td>{{trans('myapp.contact')}}</td>
-                        <td>{{trans('myapp.comments')}}</td>
-                        <td>{{trans('myapp.total')}}</td>
-                        <td>{{trans('myapp.order')}}</td>
+                        <td>{{ trans('myapp.name') }}</td>
+                        <td>{{ trans('myapp.contact') }}</td>
+                        <td>{{ trans('myapp.comments') }}</td>
+                        <td>{{ trans('myapp.total') }}</td>
+                        <td>{{ trans('myapp.order') }}</td>
                     </tr>
                     @if(isset($orders))
                         @foreach($orders as $key => $order)
@@ -22,7 +22,7 @@
                                 <td>{{ $order->contact }}</td>
                                 <td>{{ $order->comments }}</td>
                                 <td>{{ $totals[$key]['total'] }}</td>
-                                <td><a href="{{ route('orders.show', [$order->id]) }}">{{trans('myapp.view')}}</a></td>
+                                <td><a href="{{ route('orders.show', [$order->id]) }}">{{ trans('myapp.view') }}</a></td>
                             </tr>
                         @endforeach
                     @endif

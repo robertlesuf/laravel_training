@@ -11,7 +11,7 @@
                     @method('PUT')
                     <div>
                         <strong>{{ trans('myapp.title') }}</strong>
-                        <input type="text" name="title" value="{{ old('title') ? old('title') : $product->title }}"
+                        <input type="text" name="title" value="{{ old('title') ?: $product->title }}"
                                class="form-control" placeholder="{{ trans('myapp.title') }}">
                         @error('title')
                         <div class="alert alert-danger mt-1 mb-1">{{ __('Title is required') }}</div>
@@ -20,7 +20,7 @@
                     <div>
                         <strong>{{ trans('myapp.description') }}</strong>
                         <input type="text" name="description"
-                               value="{{ old('description') ? old('description') : $product->description }}"
+                               value="{{ old('description') ?: $product->description }}"
                                class="form-control"
                                placeholder="{{ trans('myapp.description') }}">
                         @error('description')
@@ -29,7 +29,7 @@
                     </div>
                     <div>
                         <strong>{{ trans('myapp.price') }}</strong>
-                        <input type="text" name="price" value="{{ old('price') ? old('price') : $product->price }}"
+                        <input type="text" name="price" value="{{ old('price') ?: $product->price }}"
                                class="form-control" placeholder="{{ trans('myapp.price') }}">
                         @error('price')
                         <div class="alert alert-danger mt-1 mb-1">{{ __('Price is required') }}</div>
