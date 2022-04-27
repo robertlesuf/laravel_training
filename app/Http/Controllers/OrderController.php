@@ -25,7 +25,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        return view('orders', ['orders' => Order::all(), 'totals' => $totals = Order::getAllTotals()]);
+        return view('orders', ['orders' => Order::all(), 'totals' => Order::getAllTotals()]);
     }
 
     public function show($id)
