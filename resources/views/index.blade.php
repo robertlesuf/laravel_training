@@ -13,7 +13,7 @@
                                 <img width="100" src="{{ asset("images/$product->image_path") }}" alt="">
                             </td>
                             <td>
-                                <form action="{{ route('cart.store',['id' => $product->id]) }}" method="POST">
+                                <form action="{{ route('cart.store', ['id' => $product->id]) }}" method="POST">
                                     @csrf
                                     <input type="submit" value="{{ trans('myapp.add') }}">
                                 </form>

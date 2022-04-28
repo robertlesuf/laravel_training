@@ -34,7 +34,7 @@
                         <div class="alert alert-danger mt-1 mb-1">{{ __('Price is required') }}</div>
                         @enderror
                     </div>
-                    <img width="100" height="100" src="{{ asset("images/$product->image_path")  }}" alt="">
+                    <img width="100" height="100" src="{{ asset("images/$product->image_path") }}" alt="">
                     <div>
                         <label class="button" for="image">{{ trans('myapp.choose_image') }}</label>
                         <input type="file" style="display:none" name="image" placeholder="" id="image">
