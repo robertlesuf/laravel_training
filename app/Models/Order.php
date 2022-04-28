@@ -4,20 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
     use HasFactory;
 
     protected $guarded = [
-        'name',
-        'contact',
-        'comments'
+        'id',
     ];
 
-    public static function getAllTotals()
+    public static function getOrdersAndTotals()
     {
-        return Order::selectRaw('SUM(order_product.price) as total, `name`')->leftJoin('order_product',
+        return Order::select('orders.*', DB::raw('Sum(order_product.price) as total'))->leftJoin('order_product',
             'order_product.order_id', '=', 'orders.id')->groupBy('orders.id')->get();
     }
 

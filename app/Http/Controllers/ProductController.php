@@ -5,52 +5,56 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
-use App\Services\ProductService;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function __construct(ProductService $productService)
-    {
-        $this->productService = $productService;
-    }
-
     public function index()
     {
-        return view('products', ['products' => Product::all()]);
+        return view('product.index', ['products' => Product::all()]);
     }
 
     public function destroy($id)
     {
-        $this->productService->deleteProductAndImage($id);
+        $product = Product::findOrFail($id);
+        Storage::delete('public/images/' . $product->image_path);
+        $product->delete();
         return redirect()->route('products.index');
     }
 
     public function create()
     {
-        return view('create');
+        return view('product.create');
     }
 
     public function store(ProductStoreRequest $request)
     {
+        $image = basename($request->file('image')->store('public/images'));
+        $createArray = $request->validated();
+        $createArray['image_path'] = $image;
         Product::create(
-            $this->productService->getProductArray($this->productService->storeImage($request), $request)
+            $createArray
         );
         return redirect()->route('products.index');
     }
 
     public function edit($id)
     {
-        return view('product', ['product' => Product::findOrFail($id)]);
+        return view('product.edit', ['product' => Product::findOrFail($id)]);
     }
 
     public function update(ProductUpdateRequest $request, $id)
     {
         $product = Product::find($id);
+        $updateArray = $request->validated();
+        if ($request->file('image')) {
+            Storage::delete('public/images/' . $product->image_path);
+            $image = basename($request->file('image')->store('public/images'));
+            $updateArray['image_path'] = $image;
+        }
         $product->update(
-            $this->productService->getProductArray($this->productService->replaceImageOnUpdate($request,
-                $product->image_path), $request)
+            $updateArray
         );
         return redirect()->route('products.index');
     }
-
 }

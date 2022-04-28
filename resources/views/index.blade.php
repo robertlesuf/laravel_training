@@ -1,11 +1,10 @@
-<link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 @extends('layouts.app')
 @section('content')
     <div class="row justify-content-center ">
         <div class="col-md-8">
             <div class="card p-5">
                 <table>
-                    @foreach($products as $product)
+                    @foreach ($products as $product)
                         <tr>
                             <td>{{ $product->title }}</td>
                             <td>{{ $product->description }}</td>

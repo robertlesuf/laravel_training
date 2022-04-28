@@ -3,17 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Services\CartService;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-
-    public function __construct(CartService $cartService)
-    {
-        $this->cartService = $cartService;
-    }
-
     public function index()
     {
         return view('cart', ['products' => Product::getProductsInCart()]);
@@ -21,13 +14,16 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
-        $this->cartService->addProductToCart($request->id);
+        $cart = session('cart', [$request->id]);
+        $cart[] = $request->id;
+        session()->put(['cart' => array_unique($cart)]);
         return redirect()->route('index');
     }
 
     public function destroy($id)
     {
-        $this->cartService->removeProductFromCart($id);
+        $cart = session('cart', []);
+        session()->put(['cart' => array_diff($cart, [$id])]);
         return redirect()->route('cart.index');
     }
 

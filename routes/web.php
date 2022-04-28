@@ -24,9 +24,9 @@ Auth::routes();
 
 Route::resource('products', ProductController::class)->middleware('auth')->except(['show']);
 
-Route::resource('cart', CartController::class)->only(['index','store','destroy']);
+Route::resource('cart', CartController::class)->only(['index', 'store', 'destroy']);
 
-Route::resource('orders', OrderController::class)->only(['index','show','store']);
+Route::resource('orders', OrderController::class)->only(['index', 'show', 'store']);
 
 
 

@@ -9,11 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'description',
-        'price',
-        'image_path'
+    protected $guarded = [
+        'id',
     ];
 
     public static function getProductsInCart()

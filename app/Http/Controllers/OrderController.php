@@ -6,7 +6,6 @@ use App\Http\Requests\OrderRequest;
 use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\Product;
-use App\Services\OrderService;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -17,31 +16,32 @@ class OrderController extends Controller
      * @return void
      */
 
-    public function __construct(OrderService $orderService)
+    public function __construct()
     {
         $this->middleware('auth')->except('store');
-        $this->orderService = $orderService;
     }
 
     public function index()
     {
-        return view('orders', ['orders' => Order::all(), 'totals' => Order::getAllTotals()]);
+        return view('order.index', ['orders' => Order::getOrdersAndTotals()]);
     }
 
     public function show($id)
     {
-        $order = Order::find($id);
-        return view('order', ['order' => $order, 'products' => $order->products()->get()]);
+        $order = Order::with('products')->where('id', $id)->first();
+        return view('order.show', ['order' => $order]);
     }
 
     public function store(OrderRequest $request)
     {
         $order = Order::create($request->validated());
         $products = Product::getProductsInCart();
-        $this->orderService->syncProducts($products, $order);
+        foreach ($products as $product) {
+            $syncArray[$product->id] = ['price' => $product->price];
+        }
+        $order->products()->sync($syncArray);
         Mail::to('me@example.com')->send(new OrderMail($order, $products));
         session()->put(['cart' => []]);
         return redirect()->route('index');
     }
-
 }
