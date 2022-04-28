@@ -28,8 +28,7 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with('products')->where('id', $id)->first();
-        return view('order.show', ['order' => $order]);
+        return view('order.show', ['order' => Order::with('products')->where('id', $id)->first()]);
     }
 
     public function store(OrderRequest $request)
