@@ -19,5 +19,6 @@ class OrderRequest extends FormRequest
             'comments' => 'required',
             'products' => 'required'
         ];
+
     }
 }
