@@ -11,6 +11,9 @@ class ProductController extends Controller
 {
     public function index()
     {
+        if(request()->expectsJson()){
+            return Product::all();
+        }
         return view('product.index', ['products' => Product::all()]);
     }
 
@@ -19,6 +22,9 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         Storage::delete('public/images/' . $product->image_path);
         $product->delete();
+        if(request()->expectsJson()){
+            return response()->json(['success' => true]);
+        }
         return redirect()->route('products.index');
     }
 
@@ -35,11 +41,17 @@ class ProductController extends Controller
         Product::create(
             $createArray
         );
+        if(request()->expectsJson()){
+            return response()->json(['success' => true]);
+        }
         return redirect()->route('products.index');
     }
 
     public function edit($id)
     {
+        if(request()->expectsJson()){
+            return Product::findOrFail($id);
+        }
         return view('product.edit', ['product' => Product::findOrFail($id)]);
     }
 
@@ -55,6 +67,9 @@ class ProductController extends Controller
         $product->update(
             $updateArray
         );
+        if(request()->expectsJson()){
+            return response()->json(['success' => true]);
+        }
         return redirect()->route('products.index');
     }
 }
