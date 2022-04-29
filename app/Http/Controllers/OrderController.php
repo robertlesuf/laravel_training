@@ -7,7 +7,7 @@ use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Mail;
-use function MongoDB\BSON\toJSON;
+
 
 class OrderController extends Controller
 {
@@ -24,16 +24,16 @@ class OrderController extends Controller
 
     public function index()
     {
-        if(request()->expectsJson()){
-            return response()->json(['orders' => Order::getOrdersAndTotals()]) ;
+        if (request()->expectsJson()) {
+            return response()->json(['orders' => Order::getOrdersAndTotals()]);
         }
         return view('order.index', ['orders' => Order::getOrdersAndTotals()]);
     }
 
     public function show($id)
     {
-        if(request()->expectsJson()){
-            return response()->json(['order' => Order::with('products')->where('id', $id)->first()]) ;
+        if (request()->expectsJson()) {
+            return response()->json(['order' => Order::with('products')->where('id', $id)->first()]);
         }
         return view('order.show', ['order' => Order::with('products')->where('id', $id)->first()]);
     }
@@ -48,6 +48,9 @@ class OrderController extends Controller
         $order->products()->sync($syncArray);
         Mail::to('me@example.com')->send(new OrderMail($order, $products));
         session()->put(['cart' => []]);
+        if (request()->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
         return redirect()->route('index');
     }
 }

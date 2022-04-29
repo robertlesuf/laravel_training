@@ -83,7 +83,7 @@ $('#update').submit(function (e) {
     e.preventDefault();
     formData = new FormData(this);
     formData.append('_method', 'PUT');
-    $.ajax('/products/'+formData.get('id'), {
+    $.ajax('/products/' + formData.get('id'), {
         type: 'POST',
         dataType: 'json',
         contentType: false,
