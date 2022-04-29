@@ -142,7 +142,6 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {
                         '_method': 'DELETE',
-                        'id': window.location.hash.match(/\d+/)[0],
                     },
                     success: function (response) {
                         window.location.hash = '#products';
