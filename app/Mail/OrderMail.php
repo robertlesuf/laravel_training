@@ -10,7 +10,8 @@ class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $order, $products;
+    protected $order;
+    protected $products;
 
     /**
      * Create a new message instance.

@@ -39,8 +39,9 @@ class OrderController extends Controller
             $syncArray[$product->id] = ['price' => $product->price];
         }
         $order->products()->sync($syncArray);
-        Mail::to('me@example.com')->send(new OrderMail($order, $products));
+        Mail::to('me@example.com')->queue(new OrderMail($order, $products));
         session()->put(['cart' => []]);
+
         return redirect()->route('index');
     }
 }
